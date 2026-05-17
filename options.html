@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Web Summarizer 设置</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>工作台设置</h1>
+      <p>左侧菜单切换模块。默认启用项会作为当前摘要实际生效配置。</p>
+
+      <section class="settingsShell">
+        <aside class="settingsNav" aria-label="设置菜单">
+          <button id="navApiBtn" type="button" class="navItem active" data-view="api">API 设置</button>
+          <button id="navPromptBtn" type="button" class="navItem" data-view="prompt">Prompt 预设</button>
+        </aside>
+
+        <section class="settingsContent">
+          <section id="apiView" class="panel viewPanel active">
+            <div class="panelHead">
+              <h2>API 预设</h2>
+              <button id="addApiPresetBtn" type="button" class="ghost">新增 API 预设</button>
+            </div>
+            <p class="hint">用于切换不同 Endpoint、Model、温度和 Token 策略。</p>
+            <div id="apiPresetList" class="presetList"></div>
+          </section>
+
+          <section id="promptView" class="panel viewPanel" hidden>
+            <div class="panelHead">
+              <h2>Prompt 预设</h2>
+              <button id="addPromptPresetBtn" type="button" class="ghost">新增 Prompt 预设</button>
+            </div>
+            <p class="hint">用于切换总结风格与后处理方式。</p>
+            <div id="promptPresetList" class="presetList"></div>
+          </section>
+        </section>
+      </section>
+
+      <section class="footerBar">
+        <button id="saveBtn" type="button">保存</button>
+        <div id="status" class="status"></div>
+      </section>
+    </main>
+
+    <script src="options.js"></script>
+  </body>
+</html>
+

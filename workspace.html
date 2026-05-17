@@ -1,0 +1,129 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>多模态内容决策助理</title>
+    <link rel="stylesheet" href="workspace.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <h1>内容总结工作台</h1>
+        <p class="sub">你要总结什么？先选来源，再生成结论。</p>
+      </header>
+
+      <section class="shell">
+        <aside class="leftRail">
+          <section class="card sourceCard">
+            <div class="cardHead">
+              <h2>输入来源</h2>
+            </div>
+            <div class="sourceTabs" role="tablist" aria-label="输入来源">
+              <button id="tabWebBtn" class="tabBtn active" type="button" data-source="web">当前网页</button>
+              <button id="tabPasteBtn" class="tabBtn" type="button" data-source="paste">粘贴文本</button>
+              <button id="tabFileBtn" class="tabBtn" type="button" data-source="file">上传文件</button>
+            </div>
+
+            <div id="webPanel" class="sourcePanel active">
+              <div class="panelLabel">当前来源网页</div>
+              <div id="sourceInfo" class="sourceInfo">未选择来源网页</div>
+              <button id="pickSourceBtn" type="button" class="ghost small mt8">换来源</button>
+            </div>
+
+            <div id="pastePanel" class="sourcePanel" hidden>
+              <div class="panelLabel">粘贴要总结的文本</div>
+              <textarea id="pasteInput" class="inputArea" placeholder="粘贴正文，建议至少 200 字。"></textarea>
+            </div>
+
+            <div id="filePanel" class="sourcePanel" hidden>
+              <div class="panelLabel">上传本地文本文件</div>
+              <input id="fileInput" type="file" accept=".txt,.md,.markdown,.csv,.json,.log,text/plain,text/markdown,text/csv,application/json" />
+              <div id="fileMeta" class="sourceInfo">未选择文件</div>
+            </div>
+          </section>
+
+          <section class="card configCard">
+            <div class="cardHead">
+              <h2>配置</h2>
+              <button id="openOptionsBtn" type="button" class="ghost tiny">API 设置</button>
+            </div>
+            <label class="promptPicker" for="promptPresetSelect">
+              <span>总结方式</span>
+              <select id="promptPresetSelect"></select>
+            </label>
+            <details class="contextBox">
+              <summary>补充上下文（可选）</summary>
+              <div class="contextGrid">
+                <label>目标<input id="ctxGoal" maxlength="120" type="text" placeholder="例如：提炼可执行策略" /></label>
+                <label>受众<input id="ctxAudience" maxlength="120" type="text" placeholder="例如：产品经理/团队" /></label>
+                <label>约束<input id="ctxConstraints" maxlength="120" type="text" placeholder="例如：仅依据原文，不扩写" /></label>
+                <label>输出偏好<input id="ctxOutput" maxlength="120" type="text" placeholder="例如：先结论后步骤" /></label>
+              </div>
+            </details>
+          </section>
+
+          <section class="card historyCard">
+            <div class="cardHead">
+              <h2>历史记录</h2>
+              <button id="clearHistoryBtn" type="button" class="ghost tiny">清空</button>
+            </div>
+            <div id="historyList" class="historyList"></div>
+          </section>
+        </aside>
+
+        <section class="mainArea">
+          <section class="card actionCard">
+            <div class="statusRow">
+              <div id="status" class="status" aria-live="polite">准备就绪</div>
+              <div class="statusActions">
+                <button id="themeModeBtn" type="button" class="ghost tiny">主题：自动</button>
+              </div>
+            </div>
+            <button id="summarizeBtn" type="button" class="primary big">生成结论</button>
+          </section>
+
+          <section class="card overviewCard">
+            <div class="cardHead">
+              <h2>结论概览</h2>
+              <button id="copyTextBtn" type="button" class="ghost tiny">复制概览</button>
+            </div>
+            <div id="overviewEmpty" class="emptyHint">暂无结果，先生成结论。</div>
+            <div id="overviewBody" class="overviewBody" hidden>
+              <p id="overviewJudgment" class="overviewJudgment"></p>
+              <ul id="overviewInsights" class="overviewInsights"></ul>
+            </div>
+          </section>
+
+          <section id="qualityCard" class="card qualityCard" hidden>
+            <div class="qualityTitle">结果可信度</div>
+            <div id="qualityConfidence" class="qualityConfidence"></div>
+            <div id="qualityMeta" class="qualityMeta"></div>
+            <div id="qualityWarnings" class="qualityWarnings"></div>
+          </section>
+
+          <details class="card detailCard" open>
+            <summary>完整结果（Markdown / 表格 / 执行步骤）</summary>
+            <div class="detailActions">
+              <button id="copyMdBtn" type="button" class="ghost tiny">复制 Markdown</button>
+              <button id="copyRichBtn" type="button" class="ghost tiny">复制富文本</button>
+              <button id="copyStepsBtn" type="button" class="ghost tiny">复制步骤</button>
+              <span id="detailToast" class="detailToast" role="status" aria-live="polite"></span>
+              <button id="focusModeBtn" type="button" class="ghost tiny focusSwitch">决策视图：开</button>
+            </div>
+            <article id="result" class="result markdown"></article>
+            <section class="actionBoard">
+              <div class="actionHead">
+                <h3>一周执行清单</h3>
+              </div>
+              <div id="actionEmpty" class="actionEmpty">暂无可执行步骤</div>
+              <ol id="actionSteps" class="actionSteps"></ol>
+            </section>
+          </details>
+        </section>
+      </section>
+    </main>
+
+    <script src="workspace.js"></script>
+  </body>
+</html>
